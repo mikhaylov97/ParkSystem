@@ -1,16 +1,17 @@
 package com.epam.park.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "owners")
-public class Owner implements Serializable {
-
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "owner_id")
+    @Column(name = "user_id")
     private long id;
+
+    @Column(name = "role")
+    private String role;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 //    private List<Order> orderList;
@@ -27,10 +28,11 @@ public class Owner implements Serializable {
     @Column(name = "surname", nullable = false, length = 20)
     private String surname;
 
-    public Owner() {
+    public User() {
     }
 
-    public Owner(String email, String password, String name, String surname) {
+    public User(String role, String email, String password, String name, String surname) {
+        this.role = role;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -43,6 +45,14 @@ public class Owner implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

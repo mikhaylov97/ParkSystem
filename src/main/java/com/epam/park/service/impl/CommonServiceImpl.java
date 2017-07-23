@@ -1,86 +1,98 @@
 package com.epam.park.service.impl;
 
-import com.epam.park.model.Forester;
-import com.epam.park.model.Owner;
-import com.epam.park.repository.ForesterRepository;
-import com.epam.park.repository.OwnerRepository;
+import com.epam.park.model.Order;
+import com.epam.park.model.Plant;
+import com.epam.park.model.User;
+import com.epam.park.repository.OrderRepository;
+import com.epam.park.repository.PlantRepository;
+import com.epam.park.repository.UserRepository;
 import com.epam.park.service.api.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CommonServiceImpl implements CommonService{
 
     @Autowired
-    OwnerRepository ownerRepository;
+    UserRepository userRepository;
+
     @Autowired
-    ForesterRepository foresterRepository;
+    OrderRepository orderRepository;
+
+    @Autowired
+    PlantRepository plantRepository;
 
     @Override
-    public List<Owner> getAllOwners() {
-        return ownerRepository.findAll();
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public Owner getOwnerById(long id) {
-        return ownerRepository.findOne(id);
+    public User getUserById(long id) {
+        return userRepository.findOne(id);
     }
 
     @Override
-    public Owner saveOwner(Owner user) {
-        return ownerRepository.saveAndFlush(user);
+    public User saveUser(User user) {
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
-    public void removeOwner(long id) {
-        ownerRepository.delete(id);
-    }
-
-    @Override
-    public List<Forester> getAllForesters() {
-        return foresterRepository.findAll();
-    }
-
-    @Override
-    public Forester getForesterById(long id) {
-        return foresterRepository.findOne(id);
-    }
-
-    @Override
-    public Forester saveForester(Forester user) {
-        return foresterRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public void removeForester(long id) {
-        foresterRepository.delete(id);
+    public void removeUser(long id) {
+        userRepository.delete(id);
     }
 
     @Override
     public boolean isEmailFree(String email) {
-        List<Owner> owners = ownerRepository.findAll();
-        List<Forester> foresters = foresterRepository.findAll();
-        for (Owner owner : owners) {
-            if (owner.getEmail().equalsIgnoreCase(email)) return false;
-        }
-        for (Forester forester : foresters) {
-            if (forester.getEmail().equalsIgnoreCase(email)) return false;
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(email)) return false;
         }
         return true;
     }
 
     @Override
     public boolean isPasswordCorrect(String email, String password) {
-        List<Owner> owners = ownerRepository.findAll();
-        for (Owner owner : owners) {
-            if (owner.getEmail().equalsIgnoreCase(email) && owner.getPassword().equals(password)) return true;
-        }
-        List<Forester> foresters = foresterRepository.findAll();
-        for (Forester forester : foresters) {
-            if (forester.getEmail().equalsIgnoreCase(email) && forester.getPassword().equals(password)) return true;
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) return true;
         }
         return false;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(email)) return user;
+        }
+        return null;
+    }
+
+    @Override
+    public String getUserRole(String email) {
+        User user = getUserByEmail(email);
+        return user.getRole();
+    }
+
+    @Override
+    public List<Order> getDoneOrders() {
+        List<Order> orders = orderRepository.findAll();
+        List<Order> result = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.getStatus().equals("done")) {
+                result.add(order);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void createOrder(Long id, String amount, String purpose) {
+        Plant plant = plantRepository.findOne(id);
+        orderRepository.saveAndFlush(new Order(plant, amount, purpose));
     }
 }

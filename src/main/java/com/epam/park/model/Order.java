@@ -1,5 +1,7 @@
 package com.epam.park.model;
 
+import com.epam.park.model.roles.OrderStatusEnum;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,12 +15,12 @@ public class Order implements Serializable{
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
+    private User owner;
 
     @ManyToOne
-    @JoinColumn(name = "forester_id")
-    private Forester forester;
+    @JoinColumn(name = "forester_id", referencedColumnName = "user_id")
+    private User forester;
 
     @ManyToOne
     @JoinColumn(name = "plant_id")
@@ -30,9 +32,22 @@ public class Order implements Serializable{
     @Column(name = "purpose")
     private String purpose;
 
-    public Order(String amountOfPlants, String purpose) {
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "description")
+    private String description;
+
+    public Order() {
+
+    }
+
+
+    public Order(Plant plant, String amountOfPlants, String purpose) {
         this.amountOfPlants = amountOfPlants;
         this.purpose = purpose;
+        this.plant = plant;
+        this.status = OrderStatusEnum.IN_PROGRESS.name();
     }
 
     public long getId() {
@@ -43,19 +58,19 @@ public class Order implements Serializable{
         this.id = id;
     }
 
-    public Owner getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
-    public Forester getForester() {
+    public User getForester() {
         return forester;
     }
 
-    public void setForester(Forester forester) {
+    public void setForester(User forester) {
         this.forester = forester;
     }
 
@@ -79,7 +94,23 @@ public class Order implements Serializable{
         return purpose;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setPurpose(String purpose) {
         this.purpose = purpose;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

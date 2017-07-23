@@ -1,19 +1,19 @@
 package com.epam.park.service.api;
 
-import com.epam.park.model.Forester;
-import com.epam.park.model.Owner;
+import com.epam.park.model.Order;
+import com.epam.park.model.User;
 
 import java.util.List;
 
 public interface CommonService {
-    List<Owner> getAllOwners();
-    Owner getOwnerById(long id);
-    Owner saveOwner(Owner user);
-    void removeOwner(long id);
-    List<Forester> getAllForesters();
-    Forester getForesterById(long id);
-    Forester saveForester(Forester user);
-    void removeForester(long id);
+    List<User> getAllUsers();
+    User getUserById(long id);
+    User saveUser(User user);
+    void removeUser(long id);
     boolean isEmailFree(String email);
     boolean isPasswordCorrect(String email, String password);
+    User getUserByEmail(String email);
+    String getUserRole(String email);
+    List<Order> getDoneOrders();
+    void createOrder(Long id, String amount, String purpose);
 }

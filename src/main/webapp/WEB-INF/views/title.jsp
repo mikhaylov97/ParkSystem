@@ -9,13 +9,13 @@
     <script src="/resources/js/auth-check.js"></script>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%--<%@include file="header.jsp"%>--%>
 <div class="container">
     <div class="row">
         <div class="col-lg-6">Slider</div>
         <div class="col-lg-4">
             <div class="row login-area auth-block">
-                <form id="auth-form" class="login-form" action="/redirectHome" method="post">
+                <form id="auth-form" class="login-form" action="/login" method="post">
                     <div class="fields">
                         <div class="field">
                             <input id="auth-email" class="form-control" name="email" type="text" placeholder="Email" required autofocus>
