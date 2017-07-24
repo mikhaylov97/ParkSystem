@@ -3,9 +3,9 @@
 <html>
 <head>
     <title>Accepting tasks</title>
-    <script scr="/resources/js/decline-task.js"></script>
 </head>
 <body>
+<%@include file="header.jsp"%>
 <div class="container">
     <div class="row">
         <h5><a href="/login">Go back</a></h5>
@@ -13,14 +13,14 @@
     </div>
     <c:forEach var="task" items="${tasks}">
         <div class="row">
-            <form id="acceptingForm" action="/admin/accepting/accept/${task.id}" method="post">
+            <form id="acceptingForm" method="post">
                 <h3>Email: ${task.forester.email}</h3>
                 <h5>Name: ${task.forester.name}</h5>
                 <h5>Surname: ${task.forester.surname}</h5>
                 <h5>Task purpose: ${task.purpose}</h5>
                 <h5>Plant: ${task.plant.name}</h5>
-                <button type="submit">Accept</button>
-                <button type="button" id="declineBtn" value="${task.id}">Decline</button>
+                <button type="submit" formaction="/admin/accepting/accept/${task.id}">Accept</button>
+                <button type="submit" formaction="/admin/accepting/decline/${task.id}">Decline</button>
             </form>
         </div>
     </c:forEach>

@@ -1,8 +1,10 @@
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <!-- Bootstrap -->
     <link href="/resources/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/resources/css/header_style.css">
+    <script src="/resources/js/changeLang.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -18,7 +20,7 @@
                     Log out
                 </div>
                 <div class="col-lg-1">
-                    Languages
+                    <a href="" id="englishRef">English</a>|<a href="" id="russianRef">Русский</a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Home page</title>
@@ -9,7 +10,8 @@
     <script src="/resources/js/auth-check.js"></script>
 </head>
 <body>
-<%--<%@include file="header.jsp"%>--%>
+<%@include file="header.jsp"%>
+<spring:message code="there"/>
 <div class="container">
     <div class="row">
         <div class="col-lg-6">Slider</div>

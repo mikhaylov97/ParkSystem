@@ -11,6 +11,7 @@ public interface AdminService {
     void removeAdmin(Long id);
     List<User> getAllAdmins();
     void acceptTask(Long id);
-    List<Order> getDoneTasks();
+    List<Order> getDoneTasks(String ownerEmail);
     void declineTask(Long id);
+    void addNewTask(Order order);
 }

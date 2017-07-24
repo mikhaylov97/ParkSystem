@@ -14,27 +14,28 @@
     <title>Security Page</title>
 </head>
 <body>
-<%--<%@include file="header.jsp"%>--%>
+<%@include file="header.jsp"%>
 <h2>Welcome : ${pageContext.request.userPrincipal.name}
     | <a href="<c:url value="/logout" />" > Logout</a></h2>
 <div class="container">
         <sec:authorize access="hasRole('ROLE_USER')">
             <div class="row">
-                Tasks: <a href="/edit">Edit profile</a>
+                Tasks: <a href="/user/edit">Edit profile</a>
             </div>
             <div class="row">
-                +${newTasks} new: <a href="">See all</a>
+                +${newTasks} new: <a href="/user/tasks">See all</a>
             </div>
             <div class="row">
-                +${declined} declines: <a href="">More info</a>
+                +${newDeclines} declines: <a href="/user/tasks/declined">More info</a>
             </div>
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <div class="row">
-                Admin: <a href="/admin/addAdmin">Add new</a> <a href="/admin/delete">Delete</a> <a href="/edit">Edit profile</a>
+                <sec:authorize access="hasRole('ROLE_SUPER_ADMIN')">
+                    Admin: <a href="/admin/addAdmin">Add new</a> <a href="/admin/delete">Delete</a></sec:authorize> <a href="/admin/edit">Edit profile</a>
             </div>
             <div class="row">
-                Tasks: <a href="">Add new</a> <a href="/admin/accepting">Accept done</a>
+                Tasks: <a href="/admin/addTask">Add new</a> <a href="/admin/accepting">Accept done</a>
             </div>
         </sec:authorize>
 </div>

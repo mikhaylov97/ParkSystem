@@ -43,11 +43,14 @@ public class Order implements Serializable{
     }
 
 
-    public Order(Plant plant, String amountOfPlants, String purpose) {
+    public Order(User owner, User worker, Plant plant, String amountOfPlants, String purpose, String description) {
         this.amountOfPlants = amountOfPlants;
         this.purpose = purpose;
         this.plant = plant;
         this.status = OrderStatusEnum.IN_PROGRESS.name();
+        this.owner = owner;
+        this.forester = worker;
+        this.description = description;
     }
 
     public long getId() {

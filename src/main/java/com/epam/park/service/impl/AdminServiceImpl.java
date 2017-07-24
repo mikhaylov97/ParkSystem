@@ -56,10 +56,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Order> getDoneTasks() {
+    public List<Order> getDoneTasks(String ownerEmail) {
         List<Order> result = new ArrayList<>();
         for (Order order : orderRepository.findAll()){
             if (order.getStatus().equals(OrderStatusEnum.DONE.name())) {
+//                    && order.getOwner().getEmail().equalsIgnoreCase(ownerEmail)) {
                 result.add(order);
             }
         }
@@ -70,6 +71,11 @@ public class AdminServiceImpl implements AdminService {
     public void declineTask(Long id) {
         Order order = orderRepository.findOne(id);
         order.setStatus(OrderStatusEnum.DECLINED.name());
+        orderRepository.saveAndFlush(order);
+    }
+
+    @Override
+    public void addNewTask(Order order) {
         orderRepository.saveAndFlush(order);
     }
 }

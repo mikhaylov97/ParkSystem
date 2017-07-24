@@ -4,6 +4,7 @@ import com.epam.park.model.User;
 import com.epam.park.model.roles.UserRoleEnum;
 import com.epam.park.service.api.CommonService;
 import com.epam.park.service.impl.security.UserDetailsServiceImpl;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class CommonController {
 
+    private static final Logger log = Logger.getLogger(CommonController.class);
+
     @Autowired
     CommonService commonService;
 
@@ -36,37 +39,23 @@ public class CommonController {
     @RequestMapping(value = "/login")
     public String showLoginPage() {
         if (isCurrentAuthenticationAnonymous()) {
+            log.info("Неавторизованный пользователь перешел на страницу логина.");
             return "title";
         }
         else {
             String userName = SecurityContextHolder.getContext().getAuthentication().getName();
             String role = commonService.getUserRole(userName);
-            if (role.equalsIgnoreCase("ROLE_USER")) return "redirect:/user";
-            if (role.equalsIgnoreCase("ROLE_ADMIN")) return "redirect:/admin";
+            log.info("Пользователь авторизовался под именем " + userName + " и ролью " + role + ".");
+            if (role.equals(UserRoleEnum.ROLE_USER.name())) return "redirect:/user";
+            if (role.equals(UserRoleEnum.ROLE_ADMIN.name())
+                    || role.equals(UserRoleEnum.ROLE_SUPER_ADMIN.name())) return "redirect:/admin";
             return "title";
         }
     }
 
-    @RequestMapping(value = "/edit")
-    public String showEditPage() {
-        return "edit";
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String changeSettings(@RequestParam(name = "name") String name,
-                                 @RequestParam(name = "surname") String surname,
-                                 @RequestParam(name = "password") String password) {
-        User user = commonService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        user.setName(name);
-        user.setSurname(surname);
-        user.setPassword(password);
-        commonService.saveUser(user);
-        return "redirect:/login";
-    }
-
     @RequestMapping(value = "/logout")
     public String showLogoutPage() {
-        return "home";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
@@ -91,6 +80,7 @@ public class CommonController {
                                     HttpServletResponse response) {
         commonService.saveUser(new User(UserRoleEnum.ROLE_USER.name(), email, password, name, surname));
         authenticateUserAndSetSession(email, password, request);
+        log.info("Зарегистрировался новый пользователь под именем: " + email + ".");
         return "redirect:/user";
     }
 

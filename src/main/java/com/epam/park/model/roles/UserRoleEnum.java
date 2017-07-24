@@ -5,7 +5,7 @@ public enum UserRoleEnum {
 
     ROLE_ADMIN,
     ROLE_USER,
-    ROLE_ANONYMOUS;
+    ROLE_SUPER_ADMIN;
 
     UserRoleEnum() {}
 }

@@ -10,6 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <spring.version>4.3.9.RELEASE</spring.version>
         <spring.data>1.11.4.RELEASE</spring.data>
@@ -27,6 +28,7 @@
         <spring-security-core.version>4.2.3.RELEASE</spring-security-core.version>
         <spring-security-config.version>4.2.3.RELEASE</spring-security-config.version>
         <spring-security-taglibs.version>4.2.3.RELEASE</spring-security-taglibs.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
     <dependencies>
@@ -131,6 +133,15 @@
             <version>${spring.test}</version>
             <scope>test</scope>
         </dependency>
+
+        <!--Log4j-->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

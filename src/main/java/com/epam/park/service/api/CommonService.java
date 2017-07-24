@@ -15,5 +15,6 @@ public interface CommonService {
     User getUserByEmail(String email);
     String getUserRole(String email);
     List<Order> getDoneOrders();
-    void createOrder(Long id, String amount, String purpose);
+    //void createOrder(Long id, String amount, String purpose);
+    List<User> getAllWorkers();
 }

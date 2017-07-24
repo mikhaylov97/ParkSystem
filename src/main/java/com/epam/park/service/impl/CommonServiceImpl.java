@@ -1,8 +1,8 @@
 package com.epam.park.service.impl;
 
 import com.epam.park.model.Order;
-import com.epam.park.model.Plant;
 import com.epam.park.model.User;
+import com.epam.park.model.roles.UserRoleEnum;
 import com.epam.park.repository.OrderRepository;
 import com.epam.park.repository.PlantRepository;
 import com.epam.park.repository.UserRepository;
@@ -90,9 +90,20 @@ public class CommonServiceImpl implements CommonService{
         return result;
     }
 
+//    @Override
+//    public void createOrder(Long id, String amount, String purpose) {
+//        Plant plant = plantRepository.findOne(id);
+//        orderRepository.saveAndFlush(new Order(plant, amount, purpose));
+//    }
+
     @Override
-    public void createOrder(Long id, String amount, String purpose) {
-        Plant plant = plantRepository.findOne(id);
-        orderRepository.saveAndFlush(new Order(plant, amount, purpose));
+    public List<User> getAllWorkers() {
+        List<User> result = new ArrayList<>();
+        for (User user : userRepository.findAll()) {
+            if (user.getRole().equals(UserRoleEnum.ROLE_USER.name())) {
+                result.add(user);
+            }
+        }
+        return result;
     }
 }

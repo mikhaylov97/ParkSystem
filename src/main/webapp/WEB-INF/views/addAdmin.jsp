@@ -4,6 +4,7 @@
     <title>Add admin</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
 <div class="container">
     <div class="row">
         <h5><a href="/login">Go back</a></h5>

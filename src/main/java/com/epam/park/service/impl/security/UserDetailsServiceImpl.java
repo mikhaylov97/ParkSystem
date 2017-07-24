@@ -29,6 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             roles.add(new SimpleGrantedAuthority(UserRoleEnum.ROLE_ADMIN.name()));
         } else if (user.getRole().equalsIgnoreCase(UserRoleEnum.ROLE_USER.name())) {
             roles.add(new SimpleGrantedAuthority(UserRoleEnum.ROLE_USER.name()));
+        } else if (user.getRole().equalsIgnoreCase(UserRoleEnum.ROLE_SUPER_ADMIN.name())) {
+            roles.add(new SimpleGrantedAuthority(UserRoleEnum.ROLE_SUPER_ADMIN.name()));
+            roles.add(new SimpleGrantedAuthority(UserRoleEnum.ROLE_ADMIN.name()));
         }
 
         // на основании полученныйх даных формируем объект UserDetails
