@@ -8,24 +8,24 @@
 <%@include file="header.jsp"%>
 <div class="container">
     <div class="row">
-        <h5><a href="/login">Go back</a></h5>
-        <h3>${pageContext.request.userPrincipal.name}, there you can add new Task!</h3>
+        <h5><a href="/login"><spring:message code="go.back"/></a></h5>
+        <h3>${pageContext.request.userPrincipal.name}, <spring:message code="you.can.add.new.task"/>!</h3>
     </div>
     <form action="/admin/addTask" method="post">
         <div class="row">
-            Enter purpose:
-            <input type="text" name="purpose" id="purpose" placeholder="Purpose">
+            <spring:message code="enter.purpose"/>:
+            <input type="text" name="purpose" id="purpose" placeholder="<spring:message code='purpose'/>">
         </div>
         <div class="row">
-            Enter description of the task:
+            <spring:message code="enter.description"/>:
             <textarea name="description" cols="30" rows="10" required></textarea>
         </div>
         <div class="row">
-            Enter amount of plants:
-            <input type="text" name="number" id="number" placeholder="Amount">
+            <spring:message code="enter.amount"/>:
+            <input type="text" name="number" id="number" placeholder="<spring:message code="amount"/>">
         </div>
         <div class="row">
-            Choose plant:
+            <spring:message code="choose.plant"/>:
             <select name="plantId" required>
                 <c:forEach var="plant" items="${plants}">
                 <option value="${plant.id}">${plant.name}</option>
@@ -33,7 +33,7 @@
             </select>
         </div>
         <div class="row">
-            Choose worker:
+            <spring:message code="choose.forester"/>:
             <select name="workerId" required>
                 <c:forEach var="worker" items="${workers}">
                     <option value="${worker.id}">${worker.email}</option>
@@ -41,7 +41,7 @@
             </select>
         </div>
         <div class="row">
-            <button id="submit">Добавить</button>
+            <button id="submit"><spring:message code="add"/></button>
         </div>
     </form>
 </div>

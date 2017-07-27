@@ -8,17 +8,17 @@
 <%@include file="header.jsp"%>
 <div class="container">
     <div class="row">
-        <h5><a href="/login">Go back</a></h5>
-        <h3>${pageContext.request.userPrincipal.name}, there you can delete Admins!</h3>
+        <h5><a href="/login"><spring:message code="go.back"/></a></h5>
+        <h3>${pageContext.request.userPrincipal.name}, <spring:message code="you.can.delete.admins"/>!</h3>
     </div>
     <c:forEach var="admin" items="${admins}">
         <c:if test="${pageContext.request.userPrincipal.name ne admin.email}">
         <div class="row">
             <form action="/admin/delete/${admin.id}" method="post">
                 <h3>Email: ${admin.email}</h3>
-                <h5>Name: ${admin.name}</h5>
-                <h5>Surname: ${admin.surname}</h5>
-                <button type="submit">Delete</button>
+                <h5><spring:message code="name"/>: ${admin.name}</h5>
+                <h5><spring:message code="surname"/>: ${admin.surname}</h5>
+                <button type="submit"><spring:message code="delete"/></button>
             </form>
         </div>
         </c:if>

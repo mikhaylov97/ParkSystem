@@ -7,28 +7,28 @@
 <%@include file="header.jsp"%>
 <div class="container">
     <div class="row">
-        <h5><a href="/login">Go back</a></h5>
-        <h3>${pageContext.request.userPrincipal.name}, there you can add new Admin!</h3>
+        <h5><a href="/login"><spring:message code="go.back"/></a></h5>
+        <h3>${pageContext.request.userPrincipal.name}, <spring:message code="you.can.add.new.admin"/>!</h3>
     </div>
     <form action="/admin/addAdmin" method="post">
         <div class="row">
-            Enter email:
+            <spring:message code="Enter"/> email:
             <input type="text" name="email" id="email" placeholder="Email">
         </div>
         <div class="row">
-            Enter name:
-            <input type="text" name="name" id="name" placeholder="Name">
+            <spring:message code="enter.name"/>:
+            <input type="text" name="name" id="name" placeholder="<spring:message code="name"/>">
         </div>
         <div class="row">
-            Enter surname:
-            <input type="text" name="surname" id="surname" placeholder="Surname">
+            <spring:message code="enter.surname"/>:
+            <input type="text" name="surname" id="surname" placeholder="<spring:message code="surname"/>">
         </div>
         <div class="row">
-            Enter password:
-            <input type="password" name="password" id="password" placeholder="Password">
+            <spring:message code="enter.password"/>:
+            <input type="password" name="password" id="password" placeholder="<spring:message code="password"/>">
         </div>
         <div class="row">
-            <button id="submit">Отправить</button>
+            <button id="submit"><spring:message code="send"/></button>
         </div>
     </form>
 </div>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Locale;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -26,7 +28,7 @@ public class UserController {
     ForesterService foresterService;
 
     @RequestMapping(value = "")
-    public ModelAndView showMainPage() {
+    public ModelAndView showMainPage(Locale locale) {
         ModelAndView modelAndView = new ModelAndView("main");
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         modelAndView.addObject("newTasks",foresterService.getNewTasks(userEmail).size());
@@ -35,14 +37,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit")
-    public String showEditPage() {
+    public String showEditPage(Locale locale) {
         return "edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String changeSettings(@RequestParam(name = "name") String name,
                                  @RequestParam(name = "surname") String surname,
-                                 @RequestParam(name = "password") String password) {
+                                 @RequestParam(name = "password") String password,
+                                 Locale locale) {
         User user = commonService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         user.setName(name);
         user.setSurname(surname);
@@ -53,7 +56,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/tasks")
-    public ModelAndView showNewTasksPage() {
+    public ModelAndView showNewTasksPage(Locale locale) {
         ModelAndView modelAndView = new ModelAndView("newTasks");
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         modelAndView.addObject("tasks", foresterService.getNewTasks(userEmail));
@@ -61,7 +64,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/tasks/done/{id}", method = RequestMethod.POST)
-    public String makeTaskDone(@PathVariable(name = "id") String id) {
+    public String makeTaskDone(@PathVariable(name = "id") String id, Locale locale) {
         foresterService.makeTaskDone(Long.parseLong(id));
         log.info("Пользователь под именем + " + SecurityContextHolder.getContext().getAuthentication().getName()
                  + " выполнил задание №" + id + ".");
@@ -69,7 +72,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/tasks/declined")
-    public ModelAndView showDeclinesPage() {
+    public ModelAndView showDeclinesPage(Locale locale) {
         ModelAndView modelAndView = new ModelAndView("declines");
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         modelAndView.addObject("declines", foresterService.getDeclinedTasks(userEmail));

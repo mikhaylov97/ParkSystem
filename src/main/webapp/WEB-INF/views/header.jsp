@@ -1,9 +1,11 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <!-- Bootstrap -->
     <link href="/resources/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/resources/css/header_style.css">
+    <script src="/resources/js/jquery-3.1.1.min.js"></script>
     <script src="/resources/js/changeLang.js"></script>
 </head>
 <body>
@@ -11,13 +13,11 @@
         <div class="container active-navbar">
             <div class="row">
                 <div class="col-lg-2">
-                    Logo
                 </div>
                 <div class="col-lg-5">
-                    Finder
                 </div>
                 <div class="col-lg-4">
-                    Log out
+                    <a href="/logout"> <spring:message code="logout"/> </a>
                 </div>
                 <div class="col-lg-1">
                     <a href="" id="englishRef">English</a>|<a href="" id="russianRef">Русский</a>

@@ -15,27 +15,27 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-<h2>Welcome : ${pageContext.request.userPrincipal.name}
-    | <a href="<c:url value="/logout" />" > Logout</a></h2>
+<h2><spring:message code="welcome"/> : ${pageContext.request.userPrincipal.name}
+    | <a href="<c:url value="/logout" />" > <spring:message code="logout"/> </a></h2>
 <div class="container">
         <sec:authorize access="hasRole('ROLE_USER')">
             <div class="row">
-                Tasks: <a href="/user/edit">Edit profile</a>
+                <spring:message code="tasks"/> : <a href="/user/edit"><spring:message code="edit.profile"/> </a>
             </div>
             <div class="row">
-                +${newTasks} new: <a href="/user/tasks">See all</a>
+                +${newTasks} <spring:message code="new.tasks"/> : <a href="/user/tasks"><spring:message code="see.all"/> </a>
             </div>
             <div class="row">
-                +${newDeclines} declines: <a href="/user/tasks/declined">More info</a>
+                +${newDeclines} <spring:message code="declines"/> : <a href="/user/tasks/declined"><spring:message code="more.info"/> </a>
             </div>
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <div class="row">
                 <sec:authorize access="hasRole('ROLE_SUPER_ADMIN')">
-                    Admin: <a href="/admin/addAdmin">Add new</a> <a href="/admin/delete">Delete</a></sec:authorize> <a href="/admin/edit">Edit profile</a>
+                    <spring:message code="admins"/> : <a href="/admin/addAdmin"><spring:message code="add.new"/> </a> <a href="/admin/delete"><spring:message code="delete"/> </a></sec:authorize> <a href="/admin/edit"><spring:message code="edit.profile"/> </a>
             </div>
             <div class="row">
-                Tasks: <a href="/admin/addTask">Add new</a> <a href="/admin/accepting">Accept done</a>
+                <spring:message code="tasks"/> : <a href="/admin/addTask"><spring:message code="add.new"/> </a> <a href="/admin/accepting"><spring:message code="accepting.done"/> </a>
             </div>
         </sec:authorize>
 </div>

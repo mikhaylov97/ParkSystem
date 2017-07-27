@@ -9,10 +9,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -36,7 +33,12 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         localeInterceptor.setParamName("lang");
 
 
-        registry.addInterceptor(localeInterceptor).addPathPatterns("/*");
+        registry.addInterceptor(localeInterceptor);
+    }
+
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
     }
 
     @Bean
@@ -68,10 +70,10 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Bean(name = "localeResolver")
     public LocaleResolver getLocaleResolver()  {
         CookieLocaleResolver resolver= new CookieLocaleResolver();
-        resolver.setCookieDomain("myAppLocaleCookie");
+        resolver.setCookieName("myAppLocaleCookie");
         // 60 minutes
 
-        resolver.setDefaultLocale(Locale.ENGLISH);
+        resolver.setDefaultLocale(new Locale("en"));
         resolver.setCookieMaxAge(60*60);
         return resolver;
     }

@@ -8,30 +8,30 @@
 <%@include file="header.jsp"%>
 <div class="container">
     <div class="row">
-        <h5><a href="/login">Go back</a></h5>
-        <h3>Hello ${pageContext.request.userPrincipal.name}, there you can change your settings!</h3>
+        <h5><a href="/login"><spring:message code="go.back"/></a></h5>
+        <h3>${pageContext.request.userPrincipal.name}, <spring:message code="you.can.change.setings"/>!</h3>
     </div>
     <form method="post">
         <div class="row">
-            Enter new name:
-            <input type="text" name="name" id="name" placeholder="Name">
+            <spring:message code="enter.new.name"/>:
+            <input type="text" name="name" id="name" placeholder="<spring:message code='name'/>">
         </div>
         <div class="row">
-            Enter new surname:
-            <input type="text" name="surname" id="surname" placeholder="Surname">
+            <spring:message code="enter.new.surname"/>:
+            <input type="text" name="surname" id="surname" placeholder="<spring:message code='surname'/>">
         </div>
         <div class="row">
-            Enter new password:
-            <input type="password" name="password" id="password" placeholder="Password">
+            <spring:message code="enter.new.password"/>:
+            <input type="password" name="password" id="password" placeholder="<spring:message code='password'/>">
         </div>
         <sec:authorize access="hasRole('ROLE_USER')">
             <div class="row">
-                <button formaction="/user/edit">Отправить</button>
+                <button formaction="/user/edit"><spring:message code="send"/></button>
             </div>
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPER_ADMIN')">
             <div class="row">
-                <button formaction="/admin/edit">Отправить</button>
+                <button formaction="/admin/edit"><spring:message code="send"/></button>
             </div>
         </sec:authorize>
     </form>

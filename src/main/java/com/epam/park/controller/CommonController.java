@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 @Controller
 public class CommonController {
@@ -32,12 +33,12 @@ public class CommonController {
     UserDetailsServiceImpl userDetailsService;
 
     @RequestMapping(value = "/")
-    public String showTitlePage() {
+    public String showTitlePage(Locale locale) {
         return "redirect:/login";
     }
 
     @RequestMapping(value = "/login")
-    public String showLoginPage() {
+    public String showLoginPage(Locale locale) {
         if (isCurrentAuthenticationAnonymous()) {
             log.info("Неавторизованный пользователь перешел на страницу логина.");
             return "title";
@@ -54,18 +55,19 @@ public class CommonController {
     }
 
     @RequestMapping(value = "/logout")
-    public String showLogoutPage() {
+    public String showLogoutPage(Locale locale) {
         return "redirect:/";
     }
 
     @RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
-    public @ResponseBody boolean checkEmail(@RequestParam(name = "email") String email) {
+    public @ResponseBody boolean checkEmail(@RequestParam(name = "email") String email, Locale locale) {
         return commonService.isEmailFree(email);
     }
 
     @RequestMapping(value = "/enter", method = RequestMethod.POST)
     public @ResponseBody String checkUser(@RequestParam(name = "email") String email,
-                                          @RequestParam(name = "password") String password) {
+                                          @RequestParam(name = "password") String password,
+                                          Locale locale) {
         if (commonService.isEmailFree(email)) return "no such user";
         if (commonService.isPasswordCorrect(email, password)) return "submit";
         else return "incorrect password";
@@ -77,7 +79,8 @@ public class CommonController {
                                     @RequestParam(name = "surname") String surname,
                                     @RequestParam(name = "password") String password,
                                     HttpServletRequest request,
-                                    HttpServletResponse response) {
+                                    HttpServletResponse response,
+                                    Locale locale) {
         commonService.saveUser(new User(UserRoleEnum.ROLE_USER.name(), email, password, name, surname));
         authenticateUserAndSetSession(email, password, request);
         log.info("Зарегистрировался новый пользователь под именем: " + email + ".");
